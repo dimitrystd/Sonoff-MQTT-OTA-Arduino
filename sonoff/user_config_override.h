@@ -11,13 +11,31 @@
 \*****************************************************************************************************/
 
 // Examples
-//#ifdef CFG_HOLDER
-//#undef CFG_HOLDER
-//#endif
-//#define CFG_HOLDER             0x20161210
+#ifdef CFG_HOLDER
+  #undef CFG_HOLDER
+#endif
+#define CFG_HOLDER             0x20170122
 
-//#ifdef STA_SSID1
-//#undef STA_SSID1
-//#endif
-//#define STA_SSID1              "yourssid1"
+#ifdef STA_SSID1
+  #undef STA_SSID1
+#endif
+#define STA_SSID1              "dms"      // [Ssid1] Wifi SSID
+#ifdef STA_PASS1
+  #undef STA_PASS1
+#endif
+#define STA_PASS1              ""  // [Password1] Wifi password
+
+#ifdef WIFI_HOSTNAME
+  #undef WIFI_HOSTNAME
+#endif
+#define WIFI_HOSTNAME          PROJECT
+
+/*-------------------------------------------------------------------------------------------*\
+ * Single wire devices DS18B20 and DS18S20
+\*-------------------------------------------------------------------------------------------*/
+//  #define DSB_PIN              3           // GPIO 3 = DS18x20 (RX pin on Sonoff Pow)
+  // *** Option 1 - Single DS18B20 - Select either Option 1 OR Option 2
+//  #define SEND_TELEMETRY_DS18B20            // Enable sending single temperature telemetry
+  // *** Option 2 - Multiple DS18B20 and/or DS18S20 (needs OneWire library!)
+//  #define SEND_TELEMETRY_DS18x20            // Enable sending multi temperature telemetry
 

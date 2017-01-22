@@ -9,27 +9,27 @@
 \*********************************************************************************************/
 
 // Enable only one out of five MODULE defines below
-#define MODULE                 SONOFF            // Sonoff Basic, Sonoff RF, Sonoff SV, Sonoff Dual, Sonoff TH, S20 Smart Socket
+//#define MODULE                 SONOFF            // Sonoff Basic, Sonoff RF, Sonoff SV, Sonoff Dual, Sonoff TH, S20 Smart Socket
 //#define MODULE                 SONOFF_2          // Sonoff Touch, Sonoff 4CH
-//#define MODULE                 SONOFF_POW        // Sonoff Pow
+#define MODULE                 SONOFF_POW        // Sonoff Pow
 //#define MODULE                 MOTOR_CAC         // iTead Motor Clockwise/Anticlockwise
 //#define MODULE                 ELECTRO_DRAGON    // Electro Dragon Wifi IoT Relay Board Based on ESP8266
 
 // -- Project --------------------------------
-#define PROJECT                "sonoff"     // PROJECT is used as the default topic delimiter and OTA file name
+#define PROJECT                "sonoff_boiler"     // PROJECT is used as the default topic delimiter and OTA file name
                                             //   As an IDE restriction it needs to be the same as the main .ino file
 
 #define CFG_HOLDER             0x20161209   // [Reset 1] Change this value to load following default configuration parameters
-#define SAVE_DATA              1            // [SaveData] Save changed parameters to Flash (0 = disable, 1 - 3600 seconds)
+#define SAVE_DATA              0            // [SaveData] Save changed parameters to Flash (0 = disable, 1 - 3600 seconds)
 #define SAVE_STATE             1            // [SaveState] Save changed power state to Flash (0 = disable, 1 = enable)
 
 // -- Wifi -----------------------------------
-#define STA_SSID1              "indebuurt1"      // [Ssid1] Wifi SSID
-#define STA_PASS1              "VnsqrtnrsddbrN"  // [Password1] Wifi password
-#define STA_SSID2              "indebuurt2"      // [Ssid2] Optional alternate AP Wifi SSID
-#define STA_PASS2              "VnsqrtnrsddbrN"  // [Password2] Optional alternate AP Wifi password
+#define STA_SSID1              ""      // [Ssid1] Wifi SSID
+#define STA_PASS1              ""  // [Password1] Wifi password
+#define STA_SSID2              ""      // [Ssid2] Optional alternate AP Wifi SSID
+#define STA_PASS2              ""  // [Password2] Optional alternate AP Wifi password
 #define WIFI_HOSTNAME          "%s-%04d"         // [Hostname] Expands to <MQTT_TOPIC>-<last 4 decimal chars of MAC address>
-#define WIFI_CONFIG_TOOL       WIFI_WPSCONFIG    // [WifiConfig] Default tool if wifi fails to connect
+#define WIFI_CONFIG_TOOL       WIFI_RETRY    // [WifiConfig] Default tool if wifi fails to connect
                                                  //   (WIFI_RESTART, WIFI_SMARTCONFIG, WIFI_MANAGER, WIFI_WPSCONFIG, WIFI_RETRY)
 // -- Syslog ---------------------------------
 #define SYS_LOG_HOST           "domus1"        // [LogHost] (Linux) syslog host
@@ -58,13 +58,13 @@
   #define MQTT_USER            "cloudmqttuser"      // [MqttUser] Mandatory user
   #define MQTT_PASS            "cloudmqttpassword"  // [MqttPassword] Mandatory password
 #else
-  #define MQTT_HOST            "domus1"     // [MqttHost]
+  #define MQTT_HOST            "192.168.0.4"     // [MqttHost]
   #define MQTT_PORT            1883         // [MqttPort] MQTT port (10123 on CloudMQTT)
-  #define MQTT_USER            "DVES_USER"  // [MqttUser] Optional user
-  #define MQTT_PASS            "DVES_PASS"  // [MqttPassword] Optional password
+  #define MQTT_USER            ""  // [MqttUser] Optional user
+  #define MQTT_PASS            ""  // [MqttPassword] Optional password
 #endif
 
-#define MQTT_CLIENT_ID         "DVES_%06X"  // [MqttClient] Also fall back topic using Chip Id = last 6 characters of MAC address
+#define MQTT_CLIENT_ID         "Sonoff_Boiler"  // [MqttClient] Also fall back topic using Chip Id = last 6 characters of MAC address
 
 #define SUB_PREFIX             "cmnd"       // Sonoff devices subscribe to:- SUB_PREFIX/MQTT_TOPIC and SUB_PREFIX/MQTT_GRPTOPIC
 #define PUB_PREFIX             "stat"       // Sonoff devices publish to:- PUB_PREFIX/MQTT_TOPIC
@@ -80,13 +80,13 @@
 #define MQTT_CMND_TOGGLE       "TOGGLE"     // Command to send when toggling (needs to be a string like "2" or "Toggle")
 
 // -- MQTT - Telemetry -----------------------
-#define TELE_PERIOD            300          // [TelePeriod] Telemetry (0 = disable, 10 - 3600 seconds)
-#define SEND_TELEMETRY_UPTIME               // Enable sending uptime telemetry (if disabled will still send hourly message)
-#define SEND_TELEMETRY_WIFI                 // Enable sending wifi telemetry
+#define TELE_PERIOD            120          // [TelePeriod] Telemetry (0 = disable, 10 - 3600 seconds)
+//#define SEND_TELEMETRY_UPTIME               // Enable sending uptime telemetry (if disabled will still send hourly message)
+//#define SEND_TELEMETRY_WIFI                 // Enable sending wifi telemetry
 #define SEND_TELEMETRY_POWER                // Enable sending power telemetry
 
 // -- MQTT - Domoticz ------------------------
-#define USE_DOMOTICZ                        // Enable Domoticz (+3k code, +0.2k mem) - Disable by //
+//#define USE_DOMOTICZ                        // Enable Domoticz (+3k code, +0.2k mem) - Disable by //
   #define DOMOTICZ_IN_TOPIC      "domoticz/in"  // [DomoticzInTopic]
   #define DOMOTICZ_OUT_TOPIC     "domoticz/out" // [DomoticzOutTopic]
   #define DOMOTICZ_RELAY_IDX1    0          // [DomoticzIdx1] Sonoff Relay 1 (0 = disable domoticz)
@@ -110,14 +110,14 @@
 //  #define USE_HUE_EMULATION                 // Enable Hue Bridge emulation for Alexa
 
 // -- mDNS -----------------------------------
-#define USE_DISCOVERY                       // Enable mDNS for the following services (+8k code, +0.3k mem)
+//#define USE_DISCOVERY                       // Enable mDNS for the following services (+8k code, +0.3k mem)
   #define WEBSERVER_ADVERTISE               // Provide access to webserver by name <Hostname>.local/
   #define MQTT_HOST_DISCOVERY               // Find MQTT host server (overrides MQTT_HOST if found)
 
 // -- Time - Up to three NTP servers in your region
 #define NTP_SERVER1            "pool.ntp.org"
-#define NTP_SERVER2            "nl.pool.ntp.org"
-#define NTP_SERVER3            "0.nl.pool.ntp.org"
+#define NTP_SERVER2            "0.ua.pool.ntp.org"
+#define NTP_SERVER3            "1.ua.pool.ntp.org"
 
 // -- Time - Start Daylight Saving Time and timezone offset from UTC in minutes
 #define TIME_DST               Last, Sun, Mar, 2, +120  // Last sunday in march at 02:00 +120 minutes
@@ -126,7 +126,7 @@
 #define TIME_STD               Last, Sun, Oct, 3, +60   // Last sunday in october 02:00 +60 minutes
 
 // -- Application ----------------------------
-#define APP_TIMEZONE           1            // [Timezone] +1 hour (Amsterdam) (-12 .. 12 = hours from UTC, 99 = use TIME_DST/TIME_STD)
+#define APP_TIMEZONE           2            // [Timezone] +1 hour (Amsterdam) (-12 .. 12 = hours from UTC, 99 = use TIME_DST/TIME_STD)
 #define APP_LEDSTATE           LED_POWER    // [LedState] Function of led (LED_OFF, LED_POWER, LED_MQTTSUB, LED_POWER_MQTTSUB, LED_MQTTPUB, LED_POWER_MQTTPUB, LED_MQTT, LED_POWER_MQTT)
 #define APP_PULSETIME          0            // [PulseTime] Time in 0.1 Sec to turn off power for relay 1 (0 = disabled)
 #define APP_POWERON_STATE      3            // [PowerOnState] Power On Relay state (0 = Off, 1 = On, 2 = Toggle Saved state, 3 = Saved state)

@@ -25,3 +25,6 @@ Starting with version 2.0.0 the following devices are supported:
 
 <img alt="Sonoff" src="https://github.com/arendst/arendst.github.io/blob/master/media/sonofftoucheu.jpg" height="280" align="left" /> 
 <img alt="Sonoff" src="https://github.com/arendst/arendst.github.io/blob/master/media/sonoff4ch.jpg" height="250" align="right" /> 
+
+## Compile
+Update wifi password in [sonoff/user_config_override.h](sonoff/user_config_override.h) before compile.
